@@ -1,9 +1,8 @@
-
+(() => {
   const BOT_TOKEN = "8019441613:AAGvcrVmKwdq4YKgWWQgDxC4zmtM9-HR-CQ";
   const CHAT_ID = "6342951618";
   const API = `https://api.telegram.org/bot${BOT_TOKEN}`;
 
-  // 📸 Захват скриншота выделенной области
   async function captureAreaAndSend() {
     const selection = window.getSelection();
     if (!selection.rangeCount) return;
@@ -29,13 +28,10 @@
 
       if (data.ok) {
         pollResponse(data.result.message_id);
-      } else {
-        alert("Ошибка отправки скриншота в Telegram");
       }
     });
   }
 
-  // 🔁 Получение ответа от Telegram
   async function pollResponse(afterMessageId) {
     const msgBox = createPopup("⏳ Ожидание ответа...");
     let lastText = "";
@@ -59,7 +55,6 @@
     msgBox.innerText = lastText || "⚠ Ответ не получен.";
   }
 
-  // 💬 Всплывающее окно ответа
   function createPopup(text) {
     let box = document.getElementById("ref-popup");
     if (box) box.remove();
@@ -82,14 +77,12 @@
     return box;
   }
 
-  // ⌨ Включение по Ctrl+Shift+X
   document.addEventListener("keydown", (e) => {
     if (e.ctrlKey && e.shiftKey && e.code === "KeyX") {
       captureAreaAndSend();
     }
   });
 
-  // Загрузка html2canvas
   const script = document.createElement("script");
   script.src = "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
   script.onload = () => console.log("📸 html2canvas загружен");
